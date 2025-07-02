@@ -13,7 +13,7 @@ interface RefreshResponse {
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8000',
     credentials: 'include',
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers, { getState }) => { //headers, api: {}
         const token = (getState() as RootState).auth.token
         if (token) {
             headers.set("Authorization", `Bearer ${token}`)
@@ -22,9 +22,10 @@ const baseQuery = fetchBaseQuery({
     },
 })
 
-const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => {
+const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (args, api, extraOptions) => { //BaseQueryFn<args, result, error>
     let result = await baseQuery(args, api, extraOptions)
 
+    //if the access token fails
     if (result?.error?.status === 403) {
         console.log("sending for refresh token...")
         const refreshResult = await baseQuery('/token/refresh', api, extraOptions)
@@ -45,7 +46,6 @@ const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQue
 
 
 export const apiSlice = createApi({
-    reducerPath: 'api',
     baseQuery: baseQueryWithReauth,
-    endpoints: builder => ({})
+    endpoints: builder => ({}),
 })

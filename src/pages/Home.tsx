@@ -5,7 +5,7 @@ function Home() {
 
     return (
         <div className="w-[100vw] h-[100vh]">
-            <div className="w-full h-[5%]">
+            <div className="w-full h-[6%]">
                 <Header />
             </div>
             <Journal />

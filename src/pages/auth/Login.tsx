@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import { LoginForm } from '@/components/login-form'
+import { LoginForm } from '@/components/Login-form'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useDispatch, useSelector } from 'react-redux'
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import type { SerializedError } from '@reduxjs/toolkit'
-import { setCredentials } from '@/features/auth/authSlice'
+import { setCredentials, selectCurrentToken } from '@/features/auth/authSlice'
 import { useLoginMutation } from '@/features/auth/authApiSlice'
-import { selectCurrentToken } from '@/features/auth/authSlice'
 
 
 function Login() {
@@ -42,12 +41,13 @@ function Login() {
 
 
     useEffect(() => {
-        console.log("token we got: ", token)
         if (token) {
             const from = (location.state as { from?: Location })?.from?.pathname || '/'
             navigate(from, { replace: true })
+            return
+        } else {
+            console.log("token doesnt exist")
         }
-        console.log("token wasnt available...")
     }, [token, location, navigate])
 
     return (

@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { apiSlice } from './api/apiSlice'
 import authReducer from '../features/auth/authSlice'
 import { loadState, saveState } from './localStorage'
@@ -7,12 +7,13 @@ import { throttle } from 'lodash'
 
 const persistedState = loadState()
 
+const rootReducer = combineReducers({
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: authReducer,
+})
+
 export const store = configureStore({
-    reducer: {
-        [apiSlice.reducerPath]: apiSlice.reducer,
-        auth: authReducer
-    },
-    //adding the middleware from implemented rtk query to the default middleware
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(apiSlice.middleware),
     devTools: true,
