@@ -8,13 +8,16 @@ import type { AppStore } from "@/lib/redux/store"
 
 
 export default function StoreProvider({ children }: { children: React.ReactNode }) {
+    const { store, persistor } = makeStore()
     const storeRef = useRef<AppStore | null>(null)
 
     if(!storeRef.current) {
-        storeRef.current = makeStore()
+        storeRef.current = store
     }
 
     return (
-        <Provider store={storeRef.current}>{children}</Provider>
+        <Provider store={storeRef.current}>
+            {children}
+        </Provider>
     )
 }

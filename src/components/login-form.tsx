@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -6,13 +7,48 @@ import { Label } from "@/components/ui/label"
 
 export function LoginForm({
   className,
+  onLogin,
   ...props
-}: React.ComponentProps<"div">) {
+}: React.ComponentProps<"div"> & { onLogin?: (e: React.FormEvent, email: string, password: string) => void }) {
+  const [email, setEmail] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+  const [errMsg, setErrMsg] = useState<string>("")
+
+  const userRef = useRef<HTMLInputElement>(null)
+  const errRef = useRef<HTMLParagraphElement>(null)
+
+  const handleSumbit = async (e: React.FormEvent): Promise<void> => {
+    e.preventDefault()
+
+    if(onLogin) {
+      try {
+        await onLogin(e, email, password)
+      } catch(err) {
+        if(err instanceof Error) {
+          setErrMsg(err.message)
+          console.error("error: ", err.message)
+        } else {
+          setErrMsg("An unknown error occurred. Please try again some time later.")
+        }
+        errRef.current?.focus()
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    userRef.current?.focus()
+  }, [])
+
+  useEffect(() => {
+    setErrMsg("")
+  }, [email, password])
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={handleSumbit}>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-extrabold">Welcome back!</h1>
@@ -26,6 +62,9 @@ export function LoginForm({
                   id="email"
                   type="email"
                   placeholder="user@example.com"
+                  value={email}
+                  ref={userRef}
+                  onChange={e => setEmail(e.target.value)}
                   required
                 />
               </div>
@@ -39,11 +78,19 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" placeholder="your password" required />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="enter your password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                />
               </div>
               <Button type="submit" className="w-full cursor-pointer">
                 Login
               </Button>
+              {errMsg && <p ref={errRef} className="text-red-500 font-bold self-center text-sm">{errMsg}</p>}
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
                   Or continue with

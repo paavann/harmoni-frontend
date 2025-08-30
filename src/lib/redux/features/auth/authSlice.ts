@@ -1,44 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit"
-
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import type { RootState } from "../../store"
 
-
-
 export interface User {
-    email: string
+    id: number,
+    name: string,
+    email: string,
+    mbti_type: string | null,
 }
 
 interface AuthState {
-    user: User | null
-    token: string | null
+    user: User | null,
+    isAuthenticated: boolean,
 }
+
 
 
 const initialState: AuthState = {
     user: null,
-    token: null,
+    isAuthenticated: false,
 }
 
 const authSlice = createSlice({
-    name: 'auth',
+    name: "auth",
     initialState,
     reducers: {
-        setCredentials: (state, action: PayloadAction<{ user: User, accessToken: string }>) => {
-            const { user, accessToken } = action.payload
-            state.user = user
-            state.token = accessToken
+        setUser: (state, action: PayloadAction<User>) => {
+            state.user = action.payload
+            state.isAuthenticated = true
         },
-        LogOut: (state) => {
+        logout: (state) => {
             state.user = null
-            state.token = null
-        }
+            state.isAuthenticated = false
+        },
     },
 })
 
-export const { setCredentials, LogOut } = authSlice.actions
-
+export const { setUser, logout } = authSlice.actions
 export default authSlice.reducer
 
 export const selectCurrentUser = (state: RootState) => state.auth.user
-export const selectCurrentToken = (state: RootState) => state.auth.token
+export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated
