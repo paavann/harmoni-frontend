@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 import type { RootState } from "../../store"
 
@@ -29,14 +29,14 @@ const authSlice = createSlice({
             state.user = action.payload
             state.isAuthenticated = true
         },
-        logout: (state) => {
+        logoutUser: (state) => {
             state.user = null
             state.isAuthenticated = false
         },
     },
 })
 
-export const { setUser, logout } = authSlice.actions
+export const { setUser, logoutUser } = authSlice.actions
 export default authSlice.reducer
 
 export const selectCurrentUser = (state: RootState) => state.auth.user

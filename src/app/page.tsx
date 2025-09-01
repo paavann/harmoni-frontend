@@ -6,7 +6,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/lib/redux/hooks";
 import { useCheckSessionQuery } from "@/lib/redux/api/apiSlice";
-import { logout, setUser } from "@/lib/redux/features/auth/authSlice";
+import { setUser } from "@/lib/redux/features/auth/authSlice";
+import { useLogoutMutation } from "@/lib/redux/features/auth/authApiSlice";
 
 
 
@@ -14,6 +15,17 @@ export default function App() {
   const router = useRouter()
   const dispatch = useAppDispatch()
   const { data, error } = useCheckSessionQuery({})
+  const [logout] = useLogoutMutation()
+
+  const handleSessionError = async () => {
+    try {
+      await logout().unwrap()
+    } catch(err) {
+      console.error("failed to logout user: ", err)
+    } finally {
+      router.push('/login')
+    }
+  }
 
 
   useEffect(() => {
@@ -21,7 +33,7 @@ export default function App() {
       dispatch(setUser(data.user))
       router.push('/home')
     } else if(error) {
-      dispatch(logout())
+      handleSessionError()
     }
   }, [data, error, dispatch])
 
