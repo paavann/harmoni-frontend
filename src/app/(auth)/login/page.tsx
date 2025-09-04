@@ -4,8 +4,6 @@ import { useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { LoginForm } from "@/components/login-form"
 import { useLoginMutation } from "@/lib/redux/features/auth/authApiSlice"
-import { useAppDispatch } from "@/lib/redux/hooks"
-import { setUser } from "@/lib/redux/features/auth/authSlice"
 import { useAppSelector } from "@/lib/redux/hooks"
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import type { SerializedError } from "@reduxjs/toolkit"
@@ -14,15 +12,13 @@ export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const user = useAppSelector(state => state.auth.user)
-  const dispatch = useAppDispatch()
   const [login] = useLoginMutation()
 
   const handleLogin = async (e: React.FormEvent, email: string, password: string) => {
     e.preventDefault()
 
     try {
-      const { data } = await login({ email, password }).unwrap()
-      dispatch(setUser(data.user))
+      await login({ email, password }).unwrap()
       router.push('/home')
     } catch(err) {
       const error = err as FetchBaseQueryError | SerializedError

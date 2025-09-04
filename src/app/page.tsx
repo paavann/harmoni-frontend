@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/lib/redux/hooks";
-import { useCheckSessionQuery } from "@/lib/redux/api/apiSlice";
+import { useCheckSessionQuery } from "@/lib/redux/features/auth/authApiSlice";
 import { setUser } from "@/lib/redux/features/auth/authSlice";
 import { useLogoutMutation } from "@/lib/redux/features/auth/authApiSlice";
 

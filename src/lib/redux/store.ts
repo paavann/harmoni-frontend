@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit"
 import { apiSlice } from "./api/apiSlice"
 import authReducer from "./features/auth/authSlice"
+import journalReducer from "./features/journal/journalSlice"
 import { persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from "redux-persist"
 import storage from "./ssrSafe-storage"
 
@@ -15,6 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
+    journal: journalReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

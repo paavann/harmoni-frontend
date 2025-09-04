@@ -55,8 +55,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     console.error("error logging out user: ", err)
                 }
             }
-        })
-    })
+        }),
+        checkSession: builder.query({
+            query: () => 'users/auth/session/'
+        }),
+    }),
+    overrideExisting: true,
 })
 
-export const { useLoginMutation, useSignupMutation, useLogoutMutation } = authApiSlice
+export const { useLoginMutation, useSignupMutation, useLogoutMutation, useCheckSessionQuery } = authApiSlice

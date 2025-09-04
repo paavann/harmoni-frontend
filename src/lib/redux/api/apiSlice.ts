@@ -8,11 +8,6 @@ const baseQuery = fetchBaseQuery({
 
 export const apiSlice = createApi({
     baseQuery,
-    endpoints: (builder) => ({
-        checkSession: builder.query({
-            query: () => 'users/auth/session/'
-        }),
-    }),
+    tagTypes: ["Journal"],
+    endpoints: (builder) => ({}),
 })
-
-export const { useCheckSessionQuery } = apiSlice
