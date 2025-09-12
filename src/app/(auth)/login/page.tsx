@@ -11,7 +11,7 @@ import type { SerializedError } from "@reduxjs/toolkit"
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const user = useAppSelector(state => state.auth.user)
+  const user = useAppSelector(state => state?.auth.user)
   const [login] = useLoginMutation()
 
   const handleLogin = async (e: React.FormEvent, email: string, password: string) => {

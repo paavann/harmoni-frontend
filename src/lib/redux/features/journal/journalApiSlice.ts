@@ -9,7 +9,14 @@ export const journalApiSlice = apiSlice.injectEndpoints({
             query: () => ({ url: 'journals/', }),
             providesTags: ["Journal"],
         }),
+        createJournal: builder.mutation<Journal, FormData>({
+            query: (newJournal) => ({
+                url: 'journals/',
+                method: 'POST',
+                body: newJournal,
+            })
+        })
     })
 })
 
-export const { useGetJournalsQuery } = journalApiSlice
+export const { useGetJournalsQuery, useCreateJournalMutation } = journalApiSlice

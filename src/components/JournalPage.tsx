@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useAppSelector } from "@/lib/redux/hooks"
 import { selectCurrentJournal } from "@/lib/redux/features/journal/journalSlice"
 
-export default function Journal() {
+export default function JournalPage() {
     const selectedJournal = useAppSelector(selectCurrentJournal)
 
     useEffect(() => {

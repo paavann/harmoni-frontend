@@ -6,7 +6,10 @@ export interface Journal {
     id: number,
     name: string,
     description: string,
+    cover_image: string | null,
     created_at: string,
+    total_entries: number,
+    last_entry_date: string | null,
 }
 
 export interface JournalState {

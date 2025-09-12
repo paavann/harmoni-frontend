@@ -1,4 +1,4 @@
-import { Metadata } from "next"
+import type { Metadata } from "next"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const { slug } = await params
@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
 }
 
-import Journal from "@/components/Journal"
+import Journal from "@/components/JournalPage"
 
 export default function JournalPage({ params }: { params: { slug: string } }) {
 
