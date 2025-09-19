@@ -101,54 +101,65 @@ export default function JournalList() {
                         className="w-auto h-auto mt-2 flex items-center justify-center rounded-4xl bg-neutral-900 text-white hover:bg-neutral-800 active:bg-black-800 p-[1%] gap-2 pr-[1.5%] pl-[1.5%] hover:cursor-pointer"
                         onClick={() => setOpen(true)}
                     >
-                        <IconPlus size={30} stroke={4} className="text-green-400" />
+                        <IconPlus size={30} stroke={4} className="text-white" />
                         <h1 className="font-bold text-white text-xl">Create Journal</h1>
                     </div>
                 </DialogTrigger>
                 
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Create a new Journal</DialogTitle>
+                <DialogContent className="sm:max-w-[425px] bg-[#e5e5e5] shadow-lg pt-4">
+                    <DialogHeader className="h-[9%] flex items-center">
+                        <DialogTitle className="relative font-bold text-2xl bottom-1">Create new Journal</DialogTitle>
                     </DialogHeader>
+                    <hr className="bg-black"/>
 
-                    <div className="grid gap-4 py-4">
+                    <div className="grid gap-4 py-4 mt-2">
                         <div className="grid gap-1">
-                            <label htmlFor="title" className="text-sm font-medium text-white">Title</label>
+                            <label htmlFor="title" className="text-sm font-medium text-black">Title</label>
                             <Input
                                 id="title"
                                 placeholder="Journal Title"
                                 value={journalName}
                                 onChange={(e) => setJournalName(e.target.value)}
+                                className="border-gray-600"
                             />
                         </div>
 
                         <div className="grid gap-1">
-                            <label htmlFor="description" className="text-sm font-medium text-white">Description</label>
+                            <label htmlFor="description" className="text-sm font-medium text-black">Description</label>
                             <Input
                                 id="description"
                                 placeholder="Journal Description"
                                 value={journalDescription}
                                 onChange={(e) => setJournalDescription(e.target.value)}
+                                className="border-gray-600"
                             />
                         </div>
 
                         <div className="grid gap-1">
-                            <label htmlFor="title" className="text-sm font-medium text-white">Upload Cover Image</label>
+                            <label htmlFor="title" className="text-sm font-medium text-black">Upload Cover Image</label>
+                            <div className="flex items-center gap-3">
+                                <label htmlFor="coverImage" className="cursor-pointer rounded-md bg-neutral-800 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-neutral-700 focus:ring-2 focus:ring-black focus:outline-none">
+                                    Choose File
+                                </label>
+                                <span className="text-sm text-gray-600 truncate max-w-[200px]">
+                                    {imageFile ? imageFile.name : "No file selected"}
+                                </span>
+                            </div>
                             <Input
                                 type="file"
                                 id="coverImage"
                                 accept="image/*"
                                 ref={fileInputRef}
                                 onChange={(e) => e.target.files && setImageFile(e.target.files[0])}
-                                className="border border-neutral-700 rounded-lg p-2 text-sm text-white bg-neutral-900 hover:bg-neutral-800"
+                                className="hidden"
                             />
-                            {imageFile && <p className="text-green-400 text-sm mt-1">{imageFile.name} selected</p>}
                         </div>
                     </div>
 
-                    <DialogFooter>
+                    <DialogFooter className="!justify-center">
                         <DialogTrigger asChild>
-                            <Button onClick={(e) => handleSubmit(() => setOpen(false))}>
+                            <Button onClick={(e) => handleSubmit(() => setOpen(false))} className="cursor-pointer w-[60%]">
+                                <IconPlus size={30} stroke={4} className="text-white" />
                                 Create Journal
                             </Button>
                         </DialogTrigger>

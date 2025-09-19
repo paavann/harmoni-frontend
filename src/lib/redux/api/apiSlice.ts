@@ -1,4 +1,4 @@
-import { Activity } from "@/components/history"
+import { Activity } from "@/components/activity"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 

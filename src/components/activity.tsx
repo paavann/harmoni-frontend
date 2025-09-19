@@ -37,7 +37,7 @@ const groupByMonth = (activities: Activity[]) => {
 }
 
 
-export default function HistoryBar() {
+export default function ActivityBar() {
   const {data: activities, isLoading, isError} = useGetUserActivityQuery()
   
   if(isLoading) {
@@ -74,8 +74,8 @@ export default function HistoryBar() {
     <div className="w-full h-full overflow-y-auto bg-gray-50 text-gray-800">
       {Object.entries(grouped).map(([monthYear, days]) => (
         <div key={monthYear}>
-          <div className="p-1.5 bg-green-200">
-            <h2 className="text-xs font-semibold text-green-800 uppercase tracking-wide">
+          <div className="p-1.5 bg-gray-800">
+            <h2 className="text-xs font-bold text-white uppercase tracking-wide ml-2">
               {monthYear}
             </h2>
           </div>
@@ -100,7 +100,7 @@ export default function HistoryBar() {
                       key={activity.id}
                       className="p-3 hover:bg-gray-100 transition cursor-pointer"
                     >
-                      <div className="flex items-center justify-between text-sm text-gray-500">
+                      <div className="flex items-center justify-between text-xs text-gray-500">
                         <span>{activity.action.replace("_", " ")}</span>
                         <span>
                           {activity.date.toLocaleTimeString([], {
@@ -109,7 +109,7 @@ export default function HistoryBar() {
                           })}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-800 mt-1 leading-snug">
+                      <p className="text-md text-gray-800 mt-1 leading-snug font-bold">
                         {activity.action_display}
                       </p>
                     </div>

@@ -19,13 +19,11 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent, email: string, password: string) => {
     e.preventDefault()
-
     try {
       await login({ email, password }).unwrap()
       router.push('/home')
     } catch(err) {
       const error = err as FetchBaseQueryError | SerializedError
-      
       if('status' in error) {
         if(!error.status) {
           throw new Error("No Server Response")

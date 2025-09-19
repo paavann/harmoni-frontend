@@ -19,14 +19,11 @@ export default function CreateAccount() {
 
   const handleSignup = async (e: React.FormEvent, name: string, email: string, password: string) => {
     e.preventDefault()
-    console.log("signing up the user...")
-
     try {
       await signup({ name, email, password }).unwrap()
       router.push('/home')
     } catch(err) {
       const error = err as FetchBaseQueryError | SerializedError
-
       if('status' in error) {
         if(!error.status) {
           throw new Error("No Server Response")
