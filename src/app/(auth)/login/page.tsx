@@ -8,11 +8,14 @@ import { useAppSelector } from "@/lib/redux/hooks"
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query"
 import type { SerializedError } from "@reduxjs/toolkit"
 
+
+
+
 export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const user = useAppSelector(state => state?.auth.user)
-  const [login] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
 
   const handleLogin = async (e: React.FormEvent, email: string, password: string) => {
     e.preventDefault()
@@ -40,15 +43,13 @@ export default function LoginPage() {
     if(user) {
       const from = searchParams.get('from') || '/home'
       router.push(from)
-    } else {
-      console.log("user not logged in.")
     }
   }, [user, router])
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-3xl">
-        <LoginForm onLogin={handleLogin}/>
+        <LoginForm onLogin={handleLogin} isLoading={isLoading}/>
       </div>
     </div>
   )

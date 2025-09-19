@@ -1,3 +1,4 @@
+import { Activity } from "@/components/history"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 
@@ -8,6 +9,13 @@ const baseQuery = fetchBaseQuery({
 
 export const apiSlice = createApi({
     baseQuery,
-    tagTypes: ["Journal"],
-    endpoints: (builder) => ({}),
+    tagTypes: ["Journal", "Activity"],
+    endpoints: (builder) => ({
+        getUserActivity: builder.query<Activity[], void>({
+            query: () => "users/user-activities/",
+            providesTags: ['Activity'],
+        }),
+    }),
 })
+
+export const { useGetUserActivityQuery } = apiSlice

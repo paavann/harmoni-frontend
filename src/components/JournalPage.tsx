@@ -1,20 +1,17 @@
 "use client";
 
-import { useEffect } from "react"
-import { useAppSelector } from "@/lib/redux/hooks"
-import { selectCurrentJournal } from "@/lib/redux/features/journal/journalSlice"
+import EntryPaper from "./paper"
+
+
 
 export default function JournalPage() {
-    const selectedJournal = useAppSelector(selectCurrentJournal)
 
-    useEffect(() => {
-        console.log("selected journal: ", selectedJournal)
-    }, [])
 
     return (
         <div className="w-full h-full">
-            <h1>{selectedJournal?.name}</h1>
-            <h3>{selectedJournal?.description}</h3>
+            <div className="bg-slate-100 py-16 h-full">
+                <EntryPaper />
+            </div>
         </div>
     )
 }

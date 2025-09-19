@@ -1,5 +1,5 @@
 import React from "react"
-import Calendar from "@/components/Calendar"
+import HistoryBar from "@/components/history"
 import JournalList from "@/components/journalList"
 
 
@@ -7,11 +7,11 @@ import JournalList from "@/components/journalList"
 export default function Home() {
 
     return (
-        <div className="w-full flex flex-row justify-between h-[92%] p-[1%]">
-            <div className="w-[25%]">
-                <Calendar />
+        <div className="w-full flex flex-row justify-between h-[92%]">
+            <div className="w-[35%]">
+                <HistoryBar />
             </div>
-            <div className="h-full w-[65%] contents">
+            <div className="h-full w-[55%] contents">
                 <JournalList />
             </div>
         </div>

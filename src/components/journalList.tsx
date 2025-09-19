@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef } from "react"
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog"
 import Link from "next/link"
 import Image from "next/image"
@@ -46,9 +46,6 @@ export default function JournalList() {
         }
     }
 
-    useEffect(() => {
-        console.log("journals data returned from api: ", journals)
-    }, [journals])
 
     return (
         <div className="w-full h-full flex flex-col p-5 items-center gap-1">

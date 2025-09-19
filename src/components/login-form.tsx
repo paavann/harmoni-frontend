@@ -8,8 +8,9 @@ import { Label } from "@/components/ui/label"
 export function LoginForm({
   className,
   onLogin,
+  isLoading,
   ...props
-}: React.ComponentProps<"div"> & { onLogin?: (e: React.FormEvent, email: string, password: string) => void }) {
+}: React.ComponentProps<"div"> & { onLogin?: (e: React.FormEvent, email: string, password: string) => void } & { isLoading: boolean }) {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [errMsg, setErrMsg] = useState<string>("")
@@ -87,8 +88,12 @@ export function LoginForm({
                   required
                 />
               </div>
-              <Button type="submit" className="w-full cursor-pointer">
-                Login
+              <Button
+                type="submit"
+                className="w-full cursor-pointer"
+                disabled={isLoading}
+              >
+                {isLoading ? "Logging in..." : "Login"}
               </Button>
               {errMsg && <p ref={errRef} className="text-red-500 font-bold self-center text-sm">{errMsg}</p>}
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
